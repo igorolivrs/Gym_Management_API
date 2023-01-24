@@ -14,6 +14,8 @@ module.exports = (app) => {
   const strategy = new Strategy(params, (payload, done) => {
     app.services.cliente.findOne({ id: payload.id })
       .then((cliente) => {
+        console.log(cliente);
+
         if (cliente) done(null, { ...payload });
         else done(null, false);
       }).catch((err) => done(err, false));

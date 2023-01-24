@@ -12,12 +12,11 @@ test('Test #27 - Receber Token ao autenticar', () => {
   ).then(() => request(app).post('/auth/signin')
     .send({ nif: NIF, password: 'pass123' })).then((res) => {
     expect(res.status).toBe(200);
-    console.log(res.body);
     expect(res.body).toHaveProperty('token');
   });
 });
 
-test('Test #28 - Tentativa de autenticação errada', () => {
+test('Test #28 - Tentativa de autenticação password errada', () => {
   const nNIF = `NIF${Date.now()}`;
   const nMAIL = `${Date.now()}@gmail.com`;
   return app.services.cliente.save(
@@ -28,21 +27,21 @@ test('Test #28 - Tentativa de autenticação errada', () => {
     .send({ nif: NIF, password: 'pass456' }))
     .then((res) => {
       expect(res.status).toBe(400);
-      expect(res.body.error).toBe('Autenticação Inválida!');
+      expect(res.body.error).toBe('Password Inválida!');
     });
 });
 
-test('Test #29 - Tentativa de autenticação com utilizador errado', () => {
+test('Test #29 - Tentativa de autenticação com NIF errado', () => {
   const nNIF = `NIF${Date.now()}`;
   return request(app).post('/auth/signin').send({ nif: nNIF, password: 'pass456' })
     .then((res) => {
       expect(res.status).toBe(400);
-      expect(res.body.error).toBe('Autenticação Inválida! #2');
+      expect(res.body.error).toBe('NIF Inválido!');
     });
 });
 
 test('Test #30 - Aceder a rotas protegidas', () => {
-  return request(app).get('/clientes')
+  return request(app).get('/v1/clientes')
     .then((res) => {
       expect(res.status).toBe(401);
     });
