@@ -1,7 +1,9 @@
 const ValidationError = require('../errors/validationError');
 
 module.exports = (app) => {
-  const findAll = (filter = {}) => app.db('reservas').where(filter).select(['id']);
+  const findAll = (userId) => {
+    return app.db('reservas').where({ cliente_id: userId });
+  };
 
   const save = (req) => {
     const reserva = req.body;

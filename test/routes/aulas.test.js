@@ -6,6 +6,7 @@ const app = require('../../src/app');
 const DATA = `${Date.now()}`;
 
 // eslint-disable-next-line no-unused-vars
+const MAIN_ROUTE = '/v1/aulas';
 let aula;
 let cliente;
 const secret = 'smartgym123';
@@ -23,7 +24,7 @@ beforeAll(async () => {
   cliente.token = jwt.encode(cliente, secret);
 });
 
-test('Teste #12 - Listar Aulas', () => request(app).get('/aulas')
+test('Teste #12 - Listar Aulas', () => request(app).get(MAIN_ROUTE)
   .set('authorization', `bearer ${cliente.token}`)
   .then((res) => {
     expect(res.status).toBe(200);
@@ -31,7 +32,7 @@ test('Teste #12 - Listar Aulas', () => request(app).get('/aulas')
   }));
 
 test('Teste #13 - Inserir Aula', () => {
-  return request(app).post('/aulas')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
       nome_aula: 'Yoga', data: DATA, instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -42,7 +43,7 @@ test('Teste #13 - Inserir Aula', () => {
     });
 });
 
-test('Teste #14 - Inserir Aula sem Nome', () => request(app).post('/aulas')
+test('Teste #14 - Inserir Aula sem Nome', () => request(app).post(MAIN_ROUTE)
   .set('authorization', `bearer ${cliente.token}`)
   .send({
     data: '01/01/2022', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -53,7 +54,7 @@ test('Teste #14 - Inserir Aula sem Nome', () => request(app).post('/aulas')
   }));
 
 test('Teste #15 - Inserir Aula sem data', async () => {
-  const result = await request(app).post('/aulas')
+  const result = await request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
       nome_aula: 'Yoga', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -63,7 +64,7 @@ test('Teste #15 - Inserir Aula sem data', async () => {
 });
 
 test('Teste #16 - Inserir Aula sem Instrutor', () => {
-  request(app).post('/aulas')
+  request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
       nome_aula: 'Yoga', data: '01/01/2022', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -75,7 +76,7 @@ test('Teste #16 - Inserir Aula sem Instrutor', () => {
 });
 
 test('Teste #17 - Inserir Aula sem Local', () => {
-  request(app).post('/aulas')
+  request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
       nome_aula: 'Yoga', data: '01/01/2022', instrutor: 'Gustavo Casellas', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -87,7 +88,7 @@ test('Teste #17 - Inserir Aula sem Local', () => {
 });
 
 test('Teste #18 - Inserir Aula sem Duração', () => {
-  request(app).post('/aulas')
+  request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
       nome_aula: 'Yoga', data: '01/01/2022', instrutor: 'Gustavo Casellas', local: 'Estudio 1', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -99,7 +100,7 @@ test('Teste #18 - Inserir Aula sem Duração', () => {
 });
 
 test('Teste #19 - Inserir Aula sem Nivel', () => {
-  request(app).post('/aulas')
+  request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
       nome_aula: 'Yoga', data: '01/01/2022', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', descricao: 'Aula de hippster',
@@ -110,7 +111,7 @@ test('Teste #19 - Inserir Aula sem Nivel', () => {
     });
 });
 
-test('Teste #20 - Inserir Aulas com Data Duplicada', () => request(app).post('/aulas')
+test('Teste #20 - Inserir Aulas com Data Duplicada', () => request(app).post(MAIN_ROUTE)
   .set('authorization', `bearer ${cliente.token}`)
   .send({
     nome_aula: 'Yoga', data: DATA, instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
@@ -122,7 +123,7 @@ test('Teste #20 - Inserir Aulas com Data Duplicada', () => request(app).post('/a
 
 test('Teste #21 - Listar Aulas por ID', () => {
   return app.db('aulas')
-    .then((aul) => request(app).get(`/aulas/${aul[0].id}`)
+    .then((aul) => request(app).get(`${MAIN_ROUTE}/${aul[0].id}`)
       .set('authorization', `bearer ${cliente.token}`))
     .then((res) => {
       expect(res.status).toBe(200);
@@ -131,7 +132,7 @@ test('Teste #21 - Listar Aulas por ID', () => {
 
 test('Teste #22 - Alterar uma Aula', () => {
   return app.db('aulas')
-    .then((aul) => request(app).put(`/aulas/${aul[0].id}`)
+    .then((aul) => request(app).put(`${MAIN_ROUTE}/${aul[0].id}`)
       .set('authorization', `bearer ${cliente.token}`)
       .send({ nome_aula: 'Aula Alterada' }))
     .then((res) => {
@@ -142,7 +143,10 @@ test('Teste #22 - Alterar uma Aula', () => {
 
 test('Teste #23 - Deletar Aulas por ID', () => {
   return app.db('aulas')
-    .then((aul) => request(app).delete(`/aulas/${aul[2].id}`)
+    .insert({
+      nome_aula: 'Aula Deletada por ID', data: `${Date.now()}`, instrutor: 'João Ferreira', local: 'Estudio 3', duracao: '30 min', nivel: 'Leve', descricao: 'Aula...',
+    }, ['id'])
+    .then((aul) => request(app).delete(`${MAIN_ROUTE}/${aul[0].id}`)
       .set('authorization', `bearer ${cliente.token}`))
     .then((res) => {
       expect(res.status).toBe(204);

@@ -1,24 +1,28 @@
+const express = require('express');
+
 module.exports = (app) => {
-  const findAll = (req, res, next) => {
-    app.services.reserva.findAll()
+  const router = express.Router();
+
+  router.get('/', (req, res, next) => {
+    app.services.reserva.findAll(req.user.id)
       .then((result) => res.status(200).json(result))
       .catch((err) => next(err));
-  };
+  });
 
-  const create = async (req, res, next) => {
+  router.post('/', async (req, res, next) => {
     try {
-      const result = await app.services.reserva.save(req);
+      const result = await app.services.reserva.save({ ...req, user_id: req.user.id });
       return res.status(201).json(result[0]);
     } catch (err) {
       return next(err);
     }
-  };
+  });
 
-  const del = ('/:id', async (req, res, next) => {
+  router.delete('/:id', async (req, res, next) => {
     app.services.reserva.remove(req.params.id)
       .then(() => res.status(204).send())
       .catch((err) => next(err));
   });
 
-  return { findAll, create, del };
+  return router;
 };
