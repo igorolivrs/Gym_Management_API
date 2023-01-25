@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1674586961351" clover="3.2.0">
+  <project timestamp="1674586961351" name="All files">
+    <metrics statements="193" coveredstatements="178" conditionals="42" coveredconditionals="36" methods="68" coveredmethods="57" elements="303" coveredelements="271" complexity="0" loc="193" ncloc="193" packages="6" files="13" classes="13"/>
+    <package name="SmartGym_API_Prod">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="knexfile.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\knexfile.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="SmartGym_API_Prod.src">
+      <metrics statements="16" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <file name="app.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\app.js">
+        <metrics statements="16" coveredstatements="15" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="25" count="15" type="stmt"/>
+        <line num="26" count="15" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="15" type="stmt"/>
+        <line num="31" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="SmartGym_API_Prod.src.config">
+      <metrics statements="26" coveredstatements="24" conditionals="2" coveredconditionals="1" methods="7" coveredmethods="6"/>
+      <file name="middlewares.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\config\middlewares.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+      </file>
+      <file name="passport.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\config\passport.js">
+        <metrics statements="15" coveredstatements="13" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="4"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="15" count="28" type="stmt"/>
+        <line num="17" count="28" type="stmt"/>
+        <line num="19" count="28" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+      </file>
+      <file name="router.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\config\router.js">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="SmartGym_API_Prod.src.errors">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="validationError.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\errors\validationError.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="15" type="stmt"/>
+        <line num="3" count="15" type="stmt"/>
+      </file>
+    </package>
+    <package name="SmartGym_API_Prod.src.routes">
+      <metrics statements="89" coveredstatements="77" conditionals="4" coveredconditionals="4" methods="41" coveredmethods="31"/>
+      <file name="aulas.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\routes\aulas.js">
+        <metrics statements="25" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="10"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="14" count="8" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="7" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+      </file>
+      <file name="auths.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\routes\auths.js">
+        <metrics statements="22" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="14" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="28" count="5" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="37" count="5" type="stmt"/>
+      </file>
+      <file name="clientes.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\routes\clientes.js">
+        <metrics statements="25" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="10"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="14" count="8" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="17" count="6" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+      </file>
+      <file name="reservas.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\routes\reservas.js">
+        <metrics statements="17" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="6"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="5" type="stmt"/>
+      </file>
+    </package>
+    <package name="SmartGym_API_Prod.src.services">
+      <metrics statements="58" coveredstatements="58" conditionals="34" coveredconditionals="30" methods="17" coveredmethods="17"/>
+      <file name="aula.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\services\aula.js">
+        <metrics statements="20" coveredstatements="20" conditionals="16" coveredconditionals="15" methods="6" coveredmethods="6"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="5" type="cond" truecount="0" falsecount="1"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
+        <line num="11" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="30" count="5" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="36" count="5" type="stmt"/>
+      </file>
+      <file name="cliente.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\services\cliente.js">
+        <metrics statements="26" coveredstatements="26" conditionals="14" coveredconditionals="13" methods="7" coveredmethods="7"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="5" type="cond" truecount="0" falsecount="1"/>
+        <line num="8" count="54" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="17" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="11" type="stmt"/>
+        <line num="23" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="10" type="stmt"/>
+        <line num="26" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="9" type="stmt"/>
+        <line num="29" count="9" type="stmt"/>
+        <line num="30" count="9" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="39" count="5" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="45" count="5" type="stmt"/>
+      </file>
+      <file name="reserva.js" path="C:\Users\Igor Oliveira\Documents\Projetos_IPCA-3_Semestre\Computacao_Distribuida\SmartGym_API_Prod\src\services\reserva.js">
+        <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="4" count="5" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="23" count="5" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

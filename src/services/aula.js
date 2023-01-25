@@ -1,7 +1,7 @@
 const ValidationError = require('../errors/validationError');
 
 module.exports = (app) => {
-  const findAll = (filter = {}) => app.db('aulas').where(filter).select(['id', 'nome_aula', 'data', 'instrutor', 'local', 'duracao', 'nivel', 'descricao']);
+  const findAll = (filter = {}) => app.db('aulas').where(filter).select(['id', 'nome_aula', 'data', 'horario', 'instrutor', 'local', 'duracao', 'nivel', 'descricao', 'image']);
 
   const findOne = (filter = {}) => {
     return app.db('aulas').where(filter).first();
@@ -14,9 +14,7 @@ module.exports = (app) => {
     if (!aula.local) throw new ValidationError('Local é um atributo obrigatório');
     if (!aula.duracao) throw new ValidationError('Duração é um atributo obrigatório');
     if (!aula.nivel) throw new ValidationError('Nivel é um atributo obrigatório');
-
-    const aulasDataDb = await findOne({ data: aula.data });
-    if (aulasDataDb) throw new ValidationError('Data duplicada na Base de Dados');
+    if (!aula.horario) throw new ValidationError('Horário é um atributo obrigatório');
 
     return app.db('aulas').insert(aula, '*');
   };

@@ -13,7 +13,7 @@ const secret = 'smartgym123';
 
 beforeAll(async () => {
   const res1 = await app.services.aula.save({
-    nome_aula: 'Yoga', data: `${Date.now()}`, instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+    nome_aula: 'Yoga', data: `${Date.now()}`, horario: '09:30', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
   });
 
   const res2 = await app.services.cliente.save({
@@ -35,7 +35,7 @@ test('Teste #13 - Inserir Aula', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
-      nome_aula: 'Yoga', data: DATA, instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+      nome_aula: 'Yoga', data: DATA, horario: '09:30', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
     })
     .then((res) => {
       expect(res.status).toBe(201);
@@ -46,7 +46,7 @@ test('Teste #13 - Inserir Aula', () => {
 test('Teste #14 - Inserir Aula sem Nome', () => request(app).post(MAIN_ROUTE)
   .set('authorization', `bearer ${cliente.token}`)
   .send({
-    data: '01/01/2022', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+    data: '01/01/2022', horario: '10:30', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
   })
   .then((res) => {
     expect(res.status).toBe(400);
@@ -57,17 +57,27 @@ test('Teste #15 - Inserir Aula sem data', async () => {
   const result = await request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
-      nome_aula: 'Yoga', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+      nome_aula: 'Yoga', horario: '11:30', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
     });
   expect(result.status).toBe(400);
   expect(result.body.error).toBe('Data é um atributo obrigatório');
 });
 
-test('Teste #16 - Inserir Aula sem Instrutor', () => {
+test('Teste #16 - Inserir Aula sem horário', async () => {
+  const result = await request(app).post(MAIN_ROUTE)
+    .set('authorization', `bearer ${cliente.token}`)
+    .send({
+      nome_aula: 'Yoga', data: '01/01/2022', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+    });
+  expect(result.status).toBe(400);
+  expect(result.body.error).toBe('Horário é um atributo obrigatório');
+});
+
+test('Teste #17 - Inserir Aula sem Instrutor', () => {
   request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
-      nome_aula: 'Yoga', data: '01/01/2022', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+      nome_aula: 'Yoga', data: '01/01/2022', horario: '09:30', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
     })
     .then((res) => {
       expect(res.status).toBe(400);
@@ -75,11 +85,11 @@ test('Teste #16 - Inserir Aula sem Instrutor', () => {
     });
 });
 
-test('Teste #17 - Inserir Aula sem Local', () => {
+test('Teste #18 - Inserir Aula sem Local', () => {
   request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
-      nome_aula: 'Yoga', data: '01/01/2022', instrutor: 'Gustavo Casellas', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+      nome_aula: 'Yoga', data: '01/01/2022', horario: '12:30', instrutor: 'Gustavo Casellas', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
     })
     .then((res) => {
       expect(res.status).toBe(400);
@@ -87,11 +97,11 @@ test('Teste #17 - Inserir Aula sem Local', () => {
     });
 });
 
-test('Teste #18 - Inserir Aula sem Duração', () => {
+test('Teste #19 - Inserir Aula sem Duração', () => {
   request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
-      nome_aula: 'Yoga', data: '01/01/2022', instrutor: 'Gustavo Casellas', local: 'Estudio 1', nivel: 'Leve', descricao: 'Aula de hippster',
+      nome_aula: 'Yoga', data: '01/01/2022', horario: '09:30', instrutor: 'Gustavo Casellas', local: 'Estudio 1', nivel: 'Leve', descricao: 'Aula de hippster',
     })
     .then((res) => {
       expect(res.status).toBe(400);
@@ -99,7 +109,7 @@ test('Teste #18 - Inserir Aula sem Duração', () => {
     });
 });
 
-test('Teste #19 - Inserir Aula sem Nivel', () => {
+test('Teste #20 - Inserir Aula sem Nivel', () => {
   request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({
@@ -110,16 +120,6 @@ test('Teste #19 - Inserir Aula sem Nivel', () => {
       expect(res.body.error).toBe('Nivel é um atributo obrigatório');
     });
 });
-
-test('Teste #20 - Inserir Aulas com Data Duplicada', () => request(app).post(MAIN_ROUTE)
-  .set('authorization', `bearer ${cliente.token}`)
-  .send({
-    nome_aula: 'Yoga', data: DATA, instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
-  })
-  .then((res) => {
-    expect(res.status).toBe(400);
-    expect(res.body.error).toBe('Data duplicada na Base de Dados');
-  }));
 
 test('Teste #21 - Listar Aulas por ID', () => {
   return app.db('aulas')
@@ -144,7 +144,7 @@ test('Teste #22 - Alterar uma Aula', () => {
 test('Teste #23 - Deletar Aulas por ID', () => {
   return app.db('aulas')
     .insert({
-      nome_aula: 'Aula Deletada por ID', data: `${Date.now()}`, instrutor: 'João Ferreira', local: 'Estudio 3', duracao: '30 min', nivel: 'Leve', descricao: 'Aula...',
+      nome_aula: 'Aula Deletada por ID', data: `${Date.now()}`, horario: '09:30', instrutor: 'João Ferreira', local: 'Estudio 3', duracao: '30 min', nivel: 'Leve', descricao: 'Aula...',
     }, ['id'])
     .then((aul) => request(app).delete(`${MAIN_ROUTE}/${aul[0].id}`)
       .set('authorization', `bearer ${cliente.token}`))

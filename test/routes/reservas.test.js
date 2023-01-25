@@ -15,13 +15,13 @@ beforeAll(async () => {
     name: 'José Igor', email: `${Date.now()}@gmail.com`, nif: `NIF${Date.now()}`, password: 'pass123',
   });
   const res2 = await app.services.aula.save({
-    nome_aula: 'Yoga', data: `${Date.now()}`, instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
+    nome_aula: 'Yoga', data: `${Date.now()}`, horario: '09:30', instrutor: 'Gustavo Casellas', local: 'Estudio 1', duracao: '45 min', nivel: 'Leve', descricao: 'Aula de hippster',
   });
   const res3 = await app.services.cliente.save({
     name: 'João Santos', email: `${Date.now()}@gmail.com`, nif: `NIF${Date.now()}`, password: 'pass123',
   });
   const res4 = await app.services.aula.save({
-    nome_aula: 'Pilates', data: `${Date.now()}`, instrutor: 'Abner Teixeira', local: 'Estudio 2', duracao: '40 min', nivel: 'Leve', descricao: 'Aula Livre',
+    nome_aula: 'Pilates', data: `${Date.now()}`, horario: '09:30', instrutor: 'Abner Teixeira', local: 'Estudio 2', duracao: '40 min', nivel: 'Leve', descricao: 'Aula Livre',
   });
 
   cliente = { ...res1[0] };
@@ -33,7 +33,7 @@ beforeAll(async () => {
   cliente2.token = jwt.encode(cliente2, secret);
 });
 
-test('Test #24 - Inserir Reserva Aula', () => {
+test('Test #25 - Inserir Reserva Aula', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
     .send({ cliente_id: cliente.id, aula_id: aula.id })
@@ -43,7 +43,7 @@ test('Test #24 - Inserir Reserva Aula', () => {
     });
 });
 
-test('Teste #25 - Listar Reservas', () => {
+test('Teste #26 - Listar Reservas', () => {
   return app.db('reservas')
     .then(() => request(app).get(MAIN_ROUTE)
       .set('authorization', `bearer ${cliente.token}`))
@@ -53,7 +53,7 @@ test('Teste #25 - Listar Reservas', () => {
     });
 });
 
-test('Teste #26 - Deletar Reserva por ID', () => {
+test('Teste #27 - Deletar Reserva por ID', () => {
   return app.db('reservas')
     .then((reser) => request(app).delete(`${MAIN_ROUTE}/${reser[0].id}`)
       .set('authorization', `bearer ${cliente.token}`))
@@ -62,7 +62,7 @@ test('Teste #26 - Deletar Reserva por ID', () => {
     });
 });
 
-test('Teste #27 - Listar apenas reservas do utilizador', () => {
+test('Teste #28 - Listar apenas reservas do utilizador', () => {
   return app.db('reservas')
     .insert([
       { cliente_id: cliente.id, aula_id: aula.id },
