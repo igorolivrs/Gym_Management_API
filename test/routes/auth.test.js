@@ -4,7 +4,7 @@ const app = require('../../src/app');
 const MAIL = `${Date.now()}@gmail.com`;
 const NIF = `NIF${Date.now()}`;
 
-test('Test #27 - Receber Token ao autenticar', () => {
+test('Test #29 - Receber Token ao autenticar', () => {
   return app.services.cliente.save(
     {
       name: 'Cliente Auth', email: MAIL, nif: NIF, password: 'pass123',
@@ -16,7 +16,7 @@ test('Test #27 - Receber Token ao autenticar', () => {
   });
 });
 
-test('Test #28 - Tentativa de autenticação password errada', () => {
+test('Test #30 - Tentativa de autenticação password errada', () => {
   const nNIF = `NIF${Date.now()}`;
   const nMAIL = `${Date.now()}@gmail.com`;
   return app.services.cliente.save(
@@ -31,7 +31,7 @@ test('Test #28 - Tentativa de autenticação password errada', () => {
     });
 });
 
-test('Test #29 - Tentativa de autenticação com NIF errado', () => {
+test('Test #31 - Tentativa de autenticação com NIF errado', () => {
   const nNIF = `NIF${Date.now()}`;
   return request(app).post('/auth/signin').send({ nif: nNIF, password: 'pass456' })
     .then((res) => {
@@ -40,14 +40,14 @@ test('Test #29 - Tentativa de autenticação com NIF errado', () => {
     });
 });
 
-test('Test #30 - Aceder a rotas protegidas', () => {
+test('Test #32 - Aceder a rotas protegidas', () => {
   return request(app).get('/v1/clientes')
     .then((res) => {
       expect(res.status).toBe(401);
     });
 });
 
-test('Test #31 - Criar Utilizador', () => {
+test('Test #33 - Criar Utilizador', () => {
   const nNIF = `NIF${Date.now()}`;
   const nMAIL = `${Date.now()}@gmail.com`;
   return request(app).post('/auth/signup')
