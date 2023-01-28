@@ -26,6 +26,8 @@ module.exports = (app) => {
   };
 
   const update = async (id, aula) => {
+    if (!aula.instrutor) throw new ValidationError('Nome do instrutor é um atributo obrigatório');
+
     return app.db('aulas')
       .where({ id })
       .update(aula, '*');

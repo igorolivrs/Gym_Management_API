@@ -13,6 +13,9 @@ module.exports = {
     migrations: {
       directory: 'src/migrations/test',
     },
+    seeds: {
+      directory: 'src/seeds',
+    },
     pool: {
       min: 0,
       max: 50,
@@ -31,6 +34,9 @@ module.exports = {
     debug: false,
     migrations: {
       directory: 'src/migrations/prod',
+    },
+    seeds: {
+      directory: 'src/seeds',
     },
     pool: {
       min: 0,
