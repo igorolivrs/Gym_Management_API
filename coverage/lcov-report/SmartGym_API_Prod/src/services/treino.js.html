@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">76.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/24</span>
+                <span class='fraction'>20/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/13</span>
+                <span class='fraction'>7/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/5</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/18</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -97,20 +97,22 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -122,7 +124,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,12 +142,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const ValidationError = require('../errors/validationError');
 &nbsp;
 module.exports = (app) =&gt; {
-  const findAll = <span class="fstat-no" title="function not covered" >(u</span>serId) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return app.db('treinos').where({ cliente_id: userId });</span>
-  };
+  const findAll = (filter = {}) =&gt; app.db('treinos').where(filter).select(['id', 'cliente_id', 'musculo']);
 &nbsp;
-  const findOne = <span class="fstat-no" title="function not covered" >(f</span>ilter = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >    return app.db('treinos').where(filter).first();</span>
+  const findOne = (filter = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> =&gt; {
+    return app.db('treinos').where(filter).first();
   };
 &nbsp;
   const save = async (req) =&gt; {
@@ -155,14 +161,20 @@ module.exports = (app) =&gt; {
     return app.db('treinos').insert(treino, '*');
   };
 &nbsp;
-  const remove = <span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {
-<span class="cstat-no" title="statement not covered" >    return app.db('treinos')</span>
+  const update = async (id, treino) =&gt; {
+    return app.db('treinos')
+      .where({ id })
+      .update(treino, '*');
+  };
+&nbsp;
+  const remove = (id) =&gt; {
+    return app.db('treinos')
       .where({ id })
       .del();
   };
 &nbsp;
   return {
-    findAll, findOne, save, remove,
+    findAll, findOne, save, update, remove,
   };
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -172,7 +184,7 @@ module.exports = (app) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-28T04:15:45.542Z
+                at 2023-01-28T19:13:33.200Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
