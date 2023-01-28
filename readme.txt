@@ -23,9 +23,9 @@ npm i -S -E bcrypt-nodejs
 
 ./node_modules/.bin/jest
 
-Docker Container Test: a161fc8bb2757560ead0731b6df66846ae6eef90b5757ffbbb3d816cedcb0852
+Docker Container Test: e851d2be2c16e811612aa91a03e66c2f0df11b7e875465f55001ca676c5e04e5
 
-Docker Container Prod: 579670e42081c80ac9aaab245fd7cb16c9a331360b807669229e83e1e636f946
+Docker Container Prod: efd1f891c648a6637704141c791ff30c6f51b2e08c176325c81e11eafd5cdead
 
 docker run --name SmartGymProd -e POSTGRES_USER=smartgymprod -e POSTGRES_PASSWORD=smartgymprod -p 6002:5432 -v "D:\Documents\IPCA\Computação Distribuída\Trabalho final\Postgres" -d postgres
 
