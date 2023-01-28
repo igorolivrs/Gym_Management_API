@@ -41,7 +41,7 @@ test('Teste #2 - Inserir Clientes', () => {
     });
 });
 
-test('Teste #2.1 - Salvar a password encriptada', async () => {
+test('Teste #3 - Salvar a password encriptada', async () => {
   const res = await request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)
     .send({
@@ -56,7 +56,7 @@ test('Teste #2.1 - Salvar a password encriptada', async () => {
   expect(clienteDb.password).not.toBe('pass123');
 });
 
-test('Teste #3 - Inserir Clientes sem Name', () => request(app).post(MAIN_ROUTE)
+test('Teste #4 - Inserir Clientes sem Name', () => request(app).post(MAIN_ROUTE)
   .set('authorization', `bearer ${user.token}`)
   .send({
     email: MAIL, nif: NIF, password: 'pass123',
@@ -66,7 +66,7 @@ test('Teste #3 - Inserir Clientes sem Name', () => request(app).post(MAIN_ROUTE)
     expect(res.body.error).toBe('Name é um atributo obrigatório');
   }));
 
-test('Teste #4 - Inserir Clientes sem Email', async () => {
+test('Teste #5 - Inserir Clientes sem Email', async () => {
   const result = await request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)
     .send({
@@ -76,7 +76,7 @@ test('Teste #4 - Inserir Clientes sem Email', async () => {
   expect(result.body.error).toBe('Email é um atributo obrigatório');
 });
 
-test('Teste #5 - Inserir Clientes sem Password', () => {
+test('Teste #6 - Inserir Clientes sem Password', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)
     .send({ name: 'José Igor', email: MAIL, nif: NIF })
@@ -86,7 +86,7 @@ test('Teste #5 - Inserir Clientes sem Password', () => {
     });
 });
 
-test('Teste #6 - Inserir Clientes sem NIF', () => {
+test('Teste #7 - Inserir Clientes sem NIF', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)
     .send({ name: 'José Igor', email: MAIL, password: 'pass123' })
@@ -96,7 +96,7 @@ test('Teste #6 - Inserir Clientes sem NIF', () => {
     });
 });
 
-test('Teste #7 - Inserir Clientes com Email Duplicado', () => {
+test('Teste #8 - Inserir Clientes com Email Duplicado', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)
     .send({
@@ -108,7 +108,7 @@ test('Teste #7 - Inserir Clientes com Email Duplicado', () => {
     });
 });
 
-test('Teste #8 - Inserir Clientes com NIF Duplicado', () => {
+test('Teste #9 - Inserir Clientes com NIF Duplicado', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${user.token}`)
     .send({
@@ -120,7 +120,7 @@ test('Teste #8 - Inserir Clientes com NIF Duplicado', () => {
     });
 });
 
-test('Teste #9 - Listar Clientes por ID', () => {
+test('Teste #10 - Listar Clientes por ID', () => {
   return app.db('clientes')
     .then((cli) => request(app).get(`${MAIN_ROUTE}/${cli[0].id}`)
       .set('authorization', `bearer ${user.token}`))
@@ -129,20 +129,77 @@ test('Teste #9 - Listar Clientes por ID', () => {
     });
 });
 
-test('Teste #10 - Alterar um Cliente', () => {
+test('Teste #11 - Alterar um Cliente', () => {
   return app.db('clientes')
     .then((cli) => request(app).put(`${MAIN_ROUTE}/${cli[0].id}`)
       .set('authorization', `bearer ${user.token}`)
-      .send({ name: 'Nome Atualizado' }))
+      .send({
+        name: 'Nome Atualizado', email: `${Date.now()}@gmail.com`, nif: `NIF${Date.now()}`, password: 'pass123',
+      }))
     .then((res) => {
       expect(res.status).toBe(200);
       expect(res.body.name).toBe('Nome Atualizado');
     });
 });
 
-test('Teste #11 - Deletar Cliente por ID', () => {
+test('Teste #12 - Alterar um Cliente sem Nome', () => {
   return app.db('clientes')
-    .then((cli) => request(app).delete(`${MAIN_ROUTE}/${cli[2].id}`)
+    .then((cli) => request(app).put(`${MAIN_ROUTE}/${cli[0].id}`)
+      .set('authorization', `bearer ${user.token}`)
+      .send({
+        email: `${Date.now()}@gmail.com`, nif: `NIF${Date.now()}`, password: 'pass123',
+      }))
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Nome é um atributo obrigatório');
+    });
+});
+
+test('Teste #13 - Alterar um Cliente sem Email', () => {
+  return app.db('clientes')
+    .then((cli) => request(app).put(`${MAIN_ROUTE}/${cli[0].id}`)
+      .set('authorization', `bearer ${user.token}`)
+      .send({
+        name: 'Cliente sem email', nif: `NIF${Date.now()}`, password: 'pass123',
+      }))
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Email é um atributo obrigatório');
+    });
+});
+
+test('Teste #14 - Alterar um Cliente sem NIF', () => {
+  return app.db('clientes')
+    .then((cli) => request(app).put(`${MAIN_ROUTE}/${cli[0].id}`)
+      .set('authorization', `bearer ${user.token}`)
+      .send({
+        name: 'Cliente sem email', email: `${Date.now()}@gmail.com`, password: 'pass123',
+      }))
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('NIF é um atributo obrigatório');
+    });
+});
+
+test('Teste #15 - Alterar um Cliente sem Password', () => {
+  return app.db('clientes')
+    .then((cli) => request(app).put(`${MAIN_ROUTE}/${cli[0].id}`)
+      .set('authorization', `bearer ${user.token}`)
+      .send({
+        name: 'Cliente sem email', email: `${Date.now()}@gmail.com`, nif: `NIF${Date.now()}`,
+      }))
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Password é um atributo obrigatório');
+    });
+});
+
+test('Teste #16 - Deletar Cliente por ID', () => {
+  return app.db('clientes')
+    .insert({
+      name: 'Cliente Deletado', email: `${Date.now()}@gmail.com`, nif: `NIF${Date.now()}`, password: 'pass123',
+    }, ['id'])
+    .then((cli) => request(app).delete(`${MAIN_ROUTE}/${cli[0].id}`)
       .set('authorization', `bearer ${user.token}`))
     .then((res) => {
       expect(res.status).toBe(204);

@@ -33,17 +33,19 @@ beforeAll(async () => {
   cliente2.token = jwt.encode(cliente2, secret);
 });
 
-test('Test #25 - Inserir Reserva Aula', () => {
+test('Test #32 - Inserir Reserva Aula', () => {
   return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${cliente.token}`)
-    .send({ cliente_id: cliente.id, aula_id: aula.id })
+    .send({
+      cliente_id: cliente.id, aula_id: aula.id, aula_nome: 'nome aula', aula_data: 'aula data', aula_horario: 'aula horario', aula_instrutor: 'Nome Instrutor', aula_local: 'Local Aula', aula_duracao: 'Duração da Aula', aula_nivel: 'aula nivel', aula_descricao: 'Descrição sobre a aula', aula_image: 'Card Image da Aula',
+    })
     .then((res) => {
       expect(res.status).toBe(201);
       expect(res.body.cliente_id).toBe(cliente.id);
     });
 });
 
-test('Teste #26 - Listar Reservas', () => {
+test('Teste #33 - Listar Reservas', () => {
   return app.db('reservas')
     .then(() => request(app).get(MAIN_ROUTE)
       .set('authorization', `bearer ${cliente.token}`))
@@ -53,7 +55,7 @@ test('Teste #26 - Listar Reservas', () => {
     });
 });
 
-test('Teste #27 - Deletar Reserva por ID', () => {
+test('Teste #34 - Deletar Reserva por ID', () => {
   return app.db('reservas')
     .then((reser) => request(app).delete(`${MAIN_ROUTE}/${reser[0].id}`)
       .set('authorization', `bearer ${cliente.token}`))
@@ -62,16 +64,32 @@ test('Teste #27 - Deletar Reserva por ID', () => {
     });
 });
 
-test('Teste #28 - Listar apenas reservas do utilizador', () => {
+test('Teste #35 - Listar apenas reservas do utilizador', () => {
   return app.db('reservas')
     .insert([
-      { cliente_id: cliente.id, aula_id: aula.id },
-      { cliente_id: cliente2.id, aula_id: aula2.id },
+      {
+        cliente_id: cliente.id, aula_id: aula.id, aula_nome: 'nome aula', aula_data: 'aula data', aula_horario: 'aula horario', aula_instrutor: 'Nome Instrutor', aula_local: 'Local Aula', aula_duracao: 'Duração da Aula', aula_nivel: 'aula nivel', aula_descricao: 'Descrição sobre a aula', aula_image: 'Card Image da Aula',
+      },
+      {
+        cliente_id: cliente2.id, aula_id: aula2.id, aula_nome: 'nome aula 2', aula_data: 'aula data 2', aula_horario: 'aula horario 2', aula_instrutor: 'Nome Instrutor 2', aula_local: 'Local Aula 2', aula_duracao: 'Duração da Aula 2', aula_nivel: 'aula nivel 2', aula_descricao: 'Descrição sobre a aula 2', aula_image: 'Card Image da Aula 2',
+      },
     ]).then(() => request(app).get(MAIN_ROUTE)
       .set('authorization', `bearer ${cliente2.token}`))
     .then((res) => {
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(1);
       expect(res.body[0].cliente_id).toBe(cliente2.id);
+    });
+});
+
+test('Teste #36 - Inserir Reserva com Aula Duplicada', () => {
+  return request(app).post(MAIN_ROUTE)
+    .set('authorization', `bearer ${cliente.token}`)
+    .send({
+      cliente_id: cliente.id, aula_id: aula.id, aula_nome: 'nome aula', aula_data: 'aula data', aula_horario: 'aula horario', aula_instrutor: 'Nome Instrutor', aula_local: 'Local Aula', aula_duracao: 'Duração da Aula', aula_nivel: 'aula nivel', aula_descricao: 'Descrição sobre a aula', aula_image: 'Card Image da Aula',
+    })
+    .then((res) => {
+      expect(res.status).toBe(400);
+      expect(res.body.error).toBe('Aula já reservada');
     });
 });

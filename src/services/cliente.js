@@ -37,9 +37,16 @@ module.exports = (app) => {
   };
 
   const update = async (id, cliente) => {
+    if (!cliente.name) throw new ValidationError('Nome é um atributo obrigatório');
+    if (!cliente.email) throw new ValidationError('Email é um atributo obrigatório');
+    if (!cliente.nif) throw new ValidationError('NIF é um atributo obrigatório');
+    if (!cliente.password) throw new ValidationError('Password é um atributo obrigatório');
+
+    const updateCliente = { ...cliente };
+    updateCliente.password = getPasswordHash(cliente.password);
     return app.db('clientes')
       .where({ id })
-      .update(cliente, '*');
+      .update(updateCliente, '*');
   };
 
   return {
