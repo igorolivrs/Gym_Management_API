@@ -55,6 +55,15 @@ test('Teste #33 - Listar Reservas', () => {
     });
 });
 
+test('Teste #44 - Listar Reservas por ID', () => {
+  return app.db('reservas')
+    .then((reser) => request(app).get(`${MAIN_ROUTE}/${reser[0].id}`)
+      .set('authorization', `bearer ${cliente.token}`))
+    .then((res) => {
+      expect(res.status).toBe(200);
+    });
+});
+
 test('Teste #34 - Deletar Reserva por ID', () => {
   return app.db('reservas')
     .then((reser) => request(app).delete(`${MAIN_ROUTE}/${reser[0].id}`)
@@ -93,3 +102,23 @@ test('Teste #36 - Inserir Reserva com Aula Duplicada', () => {
       expect(res.body.error).toBe('Aula já reservada');
     });
 });
+
+test('Teste #51 - Inserir Reserva sem Cliente ID', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    aula_id: aula.id, aula_nome: 'nome aula', aula_data: 'aula data', aula_horario: 'aula horario', aula_instrutor: 'Nome Instrutor', aula_local: 'Local Aula', aula_duracao: 'Duração da Aula', aula_nivel: 'aula nivel', aula_descricao: 'Descrição sobre a aula', aula_image: 'Card Image da Aula',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Cliente ID é um atributo obrigatório');
+  }));
+
+test('Teste #51 - Inserir Reserva sem Aula ID', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    cliente_id: cliente.id, aula_nome: 'nome aula', aula_data: 'aula data', aula_horario: 'aula horario', aula_instrutor: 'Nome Instrutor', aula_local: 'Local Aula', aula_duracao: 'Duração da Aula', aula_nivel: 'aula nivel', aula_descricao: 'Descrição sobre a aula', aula_image: 'Card Image da Aula',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Aula ID é um atributo obrigatório');
+  }));

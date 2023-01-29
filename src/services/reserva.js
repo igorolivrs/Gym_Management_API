@@ -12,8 +12,8 @@ module.exports = (app) => {
   const save = async (req) => {
     const reserva = req.body;
     // console.log(req.user);
-    if (!reserva.cliente_id) throw new ValidationError('ID Cliente é um atributo obrigatório');
-    if (!reserva.aula_id) throw new ValidationError('ID Aula é um atributo obrigatório');
+    if (!reserva.cliente_id) throw new ValidationError('Cliente ID é um atributo obrigatório');
+    if (!reserva.aula_id) throw new ValidationError('Aula ID é um atributo obrigatório');
 
     const reservaAulaIdDb = await findOne({ aula_id: reserva.aula_id });
     if (reservaAulaIdDb) throw new ValidationError('Aula já reservada');

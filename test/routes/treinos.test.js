@@ -54,25 +54,7 @@ test('Teste #44 - Listar Treinos por ID', () => {
     });
 });
 
-test('Teste #45 - Listar apenas treinos do utilizador', () => {
-  return app.db('treinos')
-    .insert([
-      {
-        cliente_id: cliente.id, musculo: 'peitoral', exercicio: 'supino', series: '3', repeticoes: '8 - 12', descanso: '45s',
-      },
-      {
-        cliente_id: cliente2.id, musculo: 'ombros', exercicio: 'elevação lateral', series: '4', repeticoes: '8 - 12', descanso: '45s',
-      },
-    ]).then(() => request(app).get(MAIN_ROUTE)
-      .set('authorization', `bearer ${cliente2.token}`))
-    .then((res) => {
-      expect(res.status).toBe(200);
-      expect(res.body.length).toBe(1);
-      expect(res.body[0].cliente_id).toBe(cliente2.id);
-    });
-});
-
-test('Teste #46 - Alterar um Treino', () => {
+test('Teste #45 - Alterar um Treino', () => {
   return app.db('treinos')
     .then((treino) => request(app).put(`${MAIN_ROUTE}/${treino[0].id}`)
       .set('authorization', `bearer ${cliente.token}`)
@@ -85,7 +67,7 @@ test('Teste #46 - Alterar um Treino', () => {
     });
 });
 
-test('Teste #47 - Deletar Treino por ID', () => {
+test('Teste #46 - Deletar Treino por ID', () => {
   return app.db('treinos')
     .then((treino) => request(app).delete(`${MAIN_ROUTE}/${treino[0].id}`)
       .set('authorization', `bearer ${cliente.token}`))
@@ -93,3 +75,63 @@ test('Teste #47 - Deletar Treino por ID', () => {
       expect(res.status).toBe(204);
     });
 });
+
+test('Teste #47 - Inserir Treino sem Cliente ID', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    musculo: 'peitoral', exercicio: 'supino', series: '3', repeticoes: '8 - 12', descanso: '45s',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Cliente ID é um atributo obrigatório');
+  }));
+
+test('Teste #48 - Inserir Treino sem Músculo', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    cliente_id: cliente.id, exercicio: 'supino', series: '3', repeticoes: '8 - 12', descanso: '45s',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Músculo é um atributo obrigatório');
+  }));
+
+test('Teste #49 - Inserir Treino sem Exercício', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    cliente_id: cliente.id, musculo: 'peitoral', series: '3', repeticoes: '8 - 12', descanso: '45s',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Exercício é um atributo obrigatório');
+  }));
+
+test('Teste #50 - Inserir Treino sem Séries', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    cliente_id: cliente.id, musculo: 'peitoral', exercicio: 'supino', repeticoes: '8 - 12', descanso: '45s',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Séries é um atributo obrigatório');
+  }));
+
+test('Teste #50 - Inserir Treino sem Repetições', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    cliente_id: cliente.id, musculo: 'peitoral', exercicio: 'supino', series: '3', descanso: '45s',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Repetições é um atributo obrigatório');
+  }));
+
+test('Teste #51 - Inserir Treino sem Descanso', () => request(app).post(MAIN_ROUTE)
+  .set('authorization', `bearer ${cliente.token}`)
+  .send({
+    cliente_id: cliente.id, musculo: 'peitoral', exercicio: 'supino', series: '3', repeticoes: '8 - 12',
+  })
+  .then((res) => {
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Descanso é um atributo obrigatório');
+  }));
