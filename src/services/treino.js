@@ -1,9 +1,7 @@
 const ValidationError = require('../errors/validationError');
 
 module.exports = (app) => {
-  const findAll = (userId) => {
-    return app.db('treinos').where({ cliente_id: userId });
-  };
+  const findAll = (filter = {}) => app.db('treinos').where(filter).select(['id', 'cliente_id', 'musculo', 'image']);
 
   const findOne = (filter = {}) => {
     return app.db('treinos').where(filter).first();
@@ -12,7 +10,7 @@ module.exports = (app) => {
   const save = async (req) => {
     const treino = req.body;
     // console.log(req.user);
-    if (!treino.cliente_id) throw new ValidationError('ID Cliente é um atributo obrigatório');
+    if (!treino.cliente_id) throw new ValidationError('Cliente ID é um atributo obrigatório');
     if (!treino.musculo) throw new ValidationError('Músculo é um atributo obrigatório');
     if (!treino.exercicio) throw new ValidationError('Exercício é um atributo obrigatório');
     if (!treino.series) throw new ValidationError('Séries é um atributo obrigatório');
