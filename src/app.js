@@ -1,11 +1,17 @@
 const app = require('express')();
 const consign = require('consign');
+const swaggerUI = require('swagger-ui-express');
+
 const cors = require('cors');
 
 const knex = require('knex');
 const knexfile = require('../knexfile');
 
+const swaggerDocs = require('./swagger.json');
+
 app.db = knex(knexfile[process.env.NODE_ENV]);
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.use(cors());
 

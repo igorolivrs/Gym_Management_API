@@ -1,0 +1,1328 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API - Smart Gym",
+    "description": "Documentação - API Smart Gym",
+    "contact": {
+      "name": "Abner Teixeira, Gustavo Casellas, José Igor Souza",
+      "email": "a21952@alunos.ipca.pt"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/v1",
+      "description": "Rotas com Autenticação"
+    },
+    {
+      "url": "http://localhost:3001/",
+      "description": "Rotas sem Autenticação"
+    }
+  ],
+  "paths": {
+    "/auth/signin": {
+      "post": {
+        "summary": "Login",
+        "description": "Essa rota é responsável pelo login do cliente",
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "nif": "111222333",
+                    "password": "user123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request - Dado inválido"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "summary": "Cadastro de cliente",
+        "description": "Essa rota é responsável por cadastrar um novo cliente, sem autenticação",
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteSend"
+              },
+              "examples": {
+                "cliente": {
+                  "value": {
+                    "name": "Abner Teixeira",
+                    "email": "abnert@gmail.com",
+                    "nif": "290987123",
+                    "password": "pass123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request - Dado duplicado na base de dados"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes": {
+      "post": {
+        "summary": "Cadastro de cliente",
+        "description": "Essa rota é responsável por cadastrar um novo cliente",
+        "tags": [
+          "Clientes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteSend"
+              },
+              "examples": {
+                "cliente": {
+                  "value": {
+                    "name": "Abner Teixeira",
+                    "email": "abnert@gmail.com",
+                    "nif": "290987123",
+                    "password": "pass123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Dado duplicado na base de dados"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar clientes",
+        "description": "Essa rota é responsável por listar todos os clientes",
+        "tags": [
+          "Clientes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClienteResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{id}": {
+      "put": {
+        "summary": "Atualizar dados de um  cliente",
+        "description": "Essa rota é responsável por atualizar os dados de um cliente",
+        "tags": [
+          "Clientes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualizar cliente pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClienteSend"
+              },
+              "examples": {
+                "cliente": {
+                  "value": {
+                    "name": "Abner Teixeira",
+                    "email": "abnert@gmail.com",
+                    "nif": "290987123",
+                    "password": "pass123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Dado duplicado na base de dados"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ClienteByID"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar clientes por ID",
+        "description": "Essa rota é responsável por buscar um cliente pelo ID",
+        "tags": [
+          "Clientes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Buscar cliente pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ClienteByID"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um cliente por ID",
+        "description": "Essa rota é responsável por deletar um cliente pelo ID",
+        "tags": [
+          "Clientes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deletar cliente pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/aulas": {
+      "post": {
+        "summary": "Cadastro de aulas",
+        "description": "Essa rota é responsável por cadastrar uma nova aula",
+        "tags": [
+          "Aulas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AulasSend"
+              },
+              "examples": {
+                "aula": {
+                  "value": {
+                    "nome_aula": "Pilates",
+                    "data": "2023/02/01",
+                    "horario": "09:30",
+                    "instrutor": "Maria Silva",
+                    "local": "salão 1",
+                    "duracao": "45 minutos",
+                    "nivel": "Leve",
+                    "descricao": "As aulas de pilates são elaboradas com exercícios de baixo impacto...",
+                    "image": "caminho da imagem"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Atributo obrigátorio"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AulasResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar aulas",
+        "description": "Essa rota é responsável por listar todos as aulas",
+        "tags": [
+          "Aulas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AulasResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/aulas/{id}": {
+      "put": {
+        "summary": "Atualizar dados de uma aula",
+        "description": "Essa rota é responsável por atualizar os dados de uma aula",
+        "tags": [
+          "Aulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualizar aula pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AulasSend"
+              },
+              "examples": {
+                "aula": {
+                  "value": {
+                    "nome_aula": "Pilates",
+                    "data": "2023/02/01",
+                    "horario": "09:30",
+                    "instrutor": "Maria Silva",
+                    "local": "salão 1",
+                    "duracao": "45 minutos",
+                    "nivel": "Leve",
+                    "descricao": "As aulas de pilates são elaboradas com exercícios de baixo impacto...",
+                    "image": "caminho da imagem"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Atributo obrigátorio"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AulasResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar aula por ID",
+        "description": "Essa rota é responsável por buscar uma aula pelo ID",
+        "tags": [
+          "Aulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Buscar aula pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AulasResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar uma aula por ID",
+        "description": "Essa rota é responsável por deletar uma aula pelo ID",
+        "tags": [
+          "Aulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deletar aula pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/treinos": {
+      "post": {
+        "summary": "Cadastro de treinos",
+        "description": "Essa rota é responsável por cadastrar um novo treino",
+        "tags": [
+          "Treinos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TreinosSend"
+              },
+              "examples": {
+                "treino": {
+                  "value": {
+                    "cliente_id": 27,
+                    "musculo": "musculo",
+                    "exercicio": "exercicio",
+                    "exercicio2": "exercicio2",
+                    "exercicio3": "exercicio3",
+                    "exercicio4": "exercicio4",
+                    "exercicio5": "exercicio5",
+                    "series": "series",
+                    "series2": "series2",
+                    "series3": "series3",
+                    "series4": "series4",
+                    "series5": "series5",
+                    "repeticoes": "repeticoes",
+                    "repeticoes2": "repeticoes2",
+                    "repeticoes3": "repeticoes3",
+                    "repeticoes4": "repeticoes4",
+                    "repeticoes5": "repeticoes5",
+                    "descanso": "descanso",
+                    "descanso2": "descanso2",
+                    "descanso3": "descanso3",
+                    "descanso4": "descanso4",
+                    "descanso5": "descanso5",
+                    "image": "image"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Atributo obrigátorio"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/TreinosResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar treinos",
+        "description": "Essa rota é responsável por listar todos os treinos",
+        "tags": [
+          "Treinos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TreinosResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/treinos/{id}": {
+      "put": {
+        "summary": "Atualizar dados de um treino",
+        "description": "Essa rota é responsável por atualizar os dados de um treino",
+        "tags": [
+          "Treinos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualizar treino pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TreinosSend"
+              },
+              "examples": {
+                "treino": {
+                  "value": {
+                    "cliente_id": 27,
+                    "musculo": "musculo",
+                    "exercicio": "exercicio",
+                    "exercicio2": "exercicio2",
+                    "exercicio3": "exercicio3",
+                    "exercicio4": "exercicio4",
+                    "exercicio5": "exercicio5",
+                    "series": "series",
+                    "series2": "series2",
+                    "series3": "series3",
+                    "series4": "series4",
+                    "series5": "series5",
+                    "repeticoes": "repeticoes",
+                    "repeticoes2": "repeticoes2",
+                    "repeticoes3": "repeticoes3",
+                    "repeticoes4": "repeticoes4",
+                    "repeticoes5": "repeticoes5",
+                    "descanso": "descanso",
+                    "descanso2": "descanso2",
+                    "descanso3": "descanso3",
+                    "descanso4": "descanso4",
+                    "descanso5": "descanso5",
+                    "image": "image"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Atributo obrigátorio"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AulasResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar treino por ID",
+        "description": "Essa rota é responsável por buscar um treino pelo ID",
+        "tags": [
+          "Treinos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Buscar treino pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/TreinosResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um treino por ID",
+        "description": "Essa rota é responsável por deletar um treino pelo ID",
+        "tags": [
+          "Treinos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deletar treino pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/reservas": {
+      "post": {
+        "summary": "Efetuar reserva",
+        "description": "Essa rota é responsável por efetuar uma nova reserva",
+        "tags": [
+          "Reservas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservasSend"
+              },
+              "examples": {
+                "treino": {
+                  "value": {
+                    "cliente_id": 27,
+                    "aula_id": 1,
+                    "aula_nome": "Pilates",
+                    "aula_data": "2023/02/01",
+                    "aula_horario": "09:30",
+                    "aula_instrutor": "Maria Silva",
+                    "aula_local": "Salão 1",
+                    "aula_duracao": "45 minutos",
+                    "aula_nivel": "Leve",
+                    "aula_descricao": "A aula de pilates...",
+                    "aula_image": "url image"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request - Atributo obrigátorio"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ReservasResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar todas as revervas de um cliente",
+        "description": "Essa rota é responsável por listar todos as reservas de um cliente",
+        "tags": [
+          "Reservas"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Buscar todas as reservas do cliente, pelo ID que consta em seu token",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReservasResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reservas/{id}": {
+      "get": {
+        "summary": "Listar reserva por ID",
+        "description": "Essa rota é responsável por buscar uma reserva pelo ID",
+        "tags": [
+          "Reservas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Buscar reserva pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/ReservasResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar uma reserva por ID",
+        "description": "Essa rota é responsável por deletar uma reserva pelo ID",
+        "tags": [
+          "Reservas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deletar reserva pelo ID",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ClienteSend": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "nif": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ClienteResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "nif": {
+            "type": "string"
+          }
+        }
+      },
+      "ClienteByID": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "nif": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          }
+        }
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "nif": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "AccessToken": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Token de acesso gerado"
+          }
+        }
+      },
+      "AulasSend": {
+        "type": "object",
+        "properties": {
+          "nome_aula": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "horario": {
+            "type": "string"
+          },
+          "instrutor": {
+            "type": "string"
+          },
+          "local": {
+            "type": "string"
+          },
+          "duracao": {
+            "type": "string"
+          },
+          "nivel": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "AulasResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "nome_aula": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "horario": {
+            "type": "string"
+          },
+          "instrutor": {
+            "type": "string"
+          },
+          "local": {
+            "type": "string"
+          },
+          "duracao": {
+            "type": "string"
+          },
+          "nivel": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "TreinosSend": {
+        "type": "object",
+        "properties": {
+          "cliente_id": {
+            "type": "number"
+          },
+          "musculo": {
+            "type": "string"
+          },
+          "exercicio": {
+            "type": "string"
+          },
+          "exercicio2": {
+            "type": "string"
+          },
+          "exercicio3": {
+            "type": "string"
+          },
+          "exercicio4": {
+            "type": "string"
+          },
+          "exercicio5": {
+            "type": "string"
+          },
+          "series": {
+            "type": "string"
+          },
+          "series2": {
+            "type": "string"
+          },
+          "series3": {
+            "type": "string"
+          },
+          "series4": {
+            "type": "string"
+          },
+          "series5": {
+            "type": "string"
+          },
+          "repeticoes": {
+            "type": "string"
+          },
+          "repeticoes2": {
+            "type": "string"
+          },
+          "repeticoes3": {
+            "type": "string"
+          },
+          "repeticoes4": {
+            "type": "string"
+          },
+          "repeticoes5": {
+            "type": "string"
+          },
+          "descanso": {
+            "type": "string"
+          },
+          "descanso2": {
+            "type": "string"
+          },
+          "descanso3": {
+            "type": "string"
+          },
+          "descanso4": {
+            "type": "string"
+          },
+          "descanso5": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "TreinosResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "cliente_id": {
+            "type": "number"
+          },
+          "musculo": {
+            "type": "string"
+          },
+          "exercicio": {
+            "type": "string"
+          },
+          "exercicio2": {
+            "type": "string"
+          },
+          "exercicio3": {
+            "type": "string"
+          },
+          "exercicio4": {
+            "type": "string"
+          },
+          "exercicio5": {
+            "type": "string"
+          },
+          "series": {
+            "type": "string"
+          },
+          "series2": {
+            "type": "string"
+          },
+          "series3": {
+            "type": "string"
+          },
+          "series4": {
+            "type": "string"
+          },
+          "series5": {
+            "type": "string"
+          },
+          "repeticoes": {
+            "type": "string"
+          },
+          "repeticoes2": {
+            "type": "string"
+          },
+          "repeticoes3": {
+            "type": "string"
+          },
+          "repeticoes4": {
+            "type": "string"
+          },
+          "repeticoes5": {
+            "type": "string"
+          },
+          "descanso": {
+            "type": "string"
+          },
+          "descanso2": {
+            "type": "string"
+          },
+          "descanso3": {
+            "type": "string"
+          },
+          "descanso4": {
+            "type": "string"
+          },
+          "descanso5": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "ReservasSend": {
+        "type": "object",
+        "properties": {
+          "cliente_id": {
+            "type": "number"
+          },
+          "aula_id": {
+            "type": "number"
+          },
+          "aula_nome": {
+            "type": "string"
+          },
+          "aula_data": {
+            "type": "string"
+          },
+          "aula_horario": {
+            "type": "string"
+          },
+          "aula_instrutor": {
+            "type": "string"
+          },
+          "aula_local": {
+            "type": "string"
+          },
+          "aula_duracao": {
+            "type": "string"
+          },
+          "aula_nivel": {
+            "type": "string"
+          },
+          "aula_descricao": {
+            "type": "string"
+          },
+          "aula_image": {
+            "type": "string"
+          }
+        }
+      },
+      "ReservasResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "cliente_id": {
+            "type": "number"
+          },
+          "aula_id": {
+            "type": "number"
+          },
+          "aula_nome": {
+            "type": "string"
+          },
+          "aula_data": {
+            "type": "string"
+          },
+          "aula_horario": {
+            "type": "string"
+          },
+          "aula_instrutor": {
+            "type": "string"
+          },
+          "aula_local": {
+            "type": "string"
+          },
+          "aula_duracao": {
+            "type": "string"
+          },
+          "aula_nivel": {
+            "type": "string"
+          },
+          "aula_descricao": {
+            "type": "string"
+          },
+          "aula_image": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
