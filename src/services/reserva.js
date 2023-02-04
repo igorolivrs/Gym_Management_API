@@ -21,7 +21,7 @@ module.exports = (app) => {
     return app.db('reservas').insert(reserva, '*');
   };
 
-  const remove = (id) => {
+  const remove = async (id) => {
     return app.db('reservas')
       .where({ id })
       .del();
